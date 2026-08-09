@@ -1,0 +1,288 @@
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+.site-header {
+  background: var(--ink-deep);
+  border-bottom: 3px solid var(--gold-soft);
+}
+.site-header__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.site-header__title {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fbf7ee;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0;
+  letter-spacing: 0.02em;
+}
+.site-nav {
+  display: flex;
+  gap: 4px;
+}
+.site-nav__link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #d8cbaa;
+  font-size: 0.9rem;
+  padding: 6px 12px;
+  border-radius: var(--radius);
+}
+.site-nav__link:hover { color: #fbf7ee; }
+.site-nav__link.is-current {
+  color: #fbf7ee;
+  background: rgba(201, 162, 75, 0.18);
+}
+
+/* ── Main / layout ── */
+.main {
+  flex: 1;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+  width: 100%;
+}
+
+.hero { margin-bottom: 32px; }
+.hero--compact { margin-bottom: 24px; }
+.hero__title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin: 0 0 12px;
+  border-bottom: 2px solid var(--vermillion);
+  padding-bottom: 10px;
+}
+.hero__lead { color: var(--ink-soft); margin: 0; font-size: 1.02rem; }
+
+.section { margin: 40px 0; }
+.section__heading {
+  font-size: 1.3rem;
+  border-left: 5px solid var(--vermillion);
+  padding-left: 12px;
+  margin: 0 0 18px;
+}
+
+/* ── 見分けフロー（判定ツール）── */
+.identify-flow {
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.identify-flow__steps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-bottom: 20px;
+}
+.identify-flow__steps span.is-active { color: var(--vermillion-deep); font-weight: 700; }
+.identify-flow__sep { color: var(--line); }
+
+.identify-flow__question {
+  font-size: 1.08rem;
+  margin: 0 0 16px;
+}
+
+.identify-flow__choices {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.identify-flow__choices--buddha { grid-template-columns: 1fr; }
+
+.identify-flow__choice {
+  text-align: left;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.identify-flow__choice:hover {
+  border-color: var(--gold-soft);
+  background: var(--paper-card);
+}
+.identify-flow__choice-label { font-weight: 700; color: var(--ink-deep); font-size: 0.98rem; }
+.identify-flow__choice-hint { font-size: 0.84rem; color: var(--ink-soft); }
+
+.identify-flow__tier-badge {
+  display: inline-block;
+  background: var(--ink-deep);
+  color: #fbf7ee;
+  font-size: 0.85rem;
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+.identify-flow__tier-desc { color: var(--ink-soft); font-size: 0.92rem; margin: 0 0 18px; }
+
+.identify-flow__back, .identify-flow__reset {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.86rem;
+  color: var(--vermillion-deep);
+  padding: 10px 0 0;
+}
+.identify-flow__reset {
+  border: 1px solid var(--vermillion);
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  margin-top: 4px;
+}
+
+.identify-flow__result {
+  border-left: 4px solid var(--vermillion);
+}
+.identify-flow__result-header { margin-bottom: 12px; }
+.identify-flow__result-name {
+  font-size: 1.4rem;
+  margin: 6px 0 2px;
+}
+.identify-flow__result-reading { color: var(--ink-soft); font-size: 0.88rem; }
+.identify-flow__result-feature {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 0.94rem;
+}
+.identify-flow__result-desc { font-size: 0.96rem; color: var(--ink); }
+.identify-flow__result-extra { font-size: 0.88rem; color: var(--ink-soft); margin: 6px 0; }
+.identify-flow__result-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+/* ── 4階層カード ── */
+.tier-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.tier-card {
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--gold-soft);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.tier-card__name { font-size: 1.1rem; margin: 0 0 6px; }
+.tier-card__reading { font-size: 0.8rem; color: var(--ink-soft); font-weight: 400; }
+.tier-card__position { font-size: 0.88rem; color: var(--ink-soft); margin: 0 0 12px; }
+.tier-card__facts {
+  margin: 0;
+  display: grid;
+  gap: 6px;
+  font-size: 0.84rem;
+}
+.tier-card__facts > div { display: flex; gap: 8px; }
+.tier-card__facts dt { color: var(--ink-soft); flex-shrink: 0; width: 4.2em; }
+.tier-card__facts dd { margin: 0; }
+
+/* ── 図鑑 ── */
+.zukan-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.zukan-card {
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.zukan-card__name { font-size: 1.05rem; margin: 0 0 2px; }
+.zukan-card__reading { font-size: 0.78rem; color: var(--ink-soft); margin: 0 0 8px; }
+.zukan-card__feature {
+  font-size: 0.86rem;
+  color: var(--vermillion-deep);
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+.zukan-card__desc { font-size: 0.88rem; color: var(--ink); margin: 0; }
+
+.statue-list {
+  display: grid;
+  gap: 10px;
+}
+.statue-card {
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--vermillion);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+}
+.statue-card__name { font-size: 1rem; margin: 0 0 2px; }
+.statue-card__temple { font-size: 0.86rem; color: var(--ink-soft); margin: 0 0 4px; }
+.statue-card__meta { font-size: 0.8rem; color: var(--gold); margin: 0 0 8px; }
+.statue-card__note { font-size: 0.88rem; color: var(--ink); margin: 0; }
+
+/* ── About / Privacy ── */
+.page-article h1 {
+  font-size: 1.6rem;
+  border-bottom: 2px solid var(--vermillion);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+.page-article h2 {
+  font-size: 1.15rem;
+  border-left: 4px solid var(--gold-soft);
+  padding-left: 12px;
+  margin: 28px 0 10px;
+}
+.page-article p { color: var(--ink); }
+.page-article__disclaimer {
+  background: var(--paper-deep);
+  border-left: 3px solid var(--gold);
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+/* ── Footer ── */
+.site-footer {
+  background: var(--ink-deep);
+  color: #d8cbaa;
+  padding: 24px 20px;
+  text-align: center;
+}
+.site-footer__disclaimer { max-width: var(--maxw); margin: 0 auto 12px; font-size: 0.82rem; }
+.site-footer__nav { display: flex; justify-content: center; gap: 16px; }
+.site-footer__nav button {
+  background: none;
+  border: none;
+  color: #d8cbaa;
+  cursor: pointer;
+  font-size: 0.82rem;
+  padding: 0;
+}
+.site-footer__nav button:hover { color: #fbf7ee; }
+
+@media (max-width: 560px) {
+  .identify-flow__choices { grid-template-columns: 1fr; }
+  .tier-grid { grid-template-columns: 1fr; }
+  .zukan-grid { grid-template-columns: 1fr; }
+}

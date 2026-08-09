@@ -1,0 +1,44 @@
+:root {
+  /* 和の古美術図録：墨（濃紺鼠）× 生成り × 朱・金泥 */
+  --ink: #2b3a4a;
+  --ink-deep: #1c2733;
+  --ink-soft: #5a6472;
+  --vermillion: #b3382c;
+  --vermillion-deep: #8f2c22;
+  --gold: #a8823a;
+  --gold-soft: #c9a24b;
+  --paper: #f3ece0;
+  --paper-card: #fbf7ee;
+  --paper-deep: #e8ddc9;
+  --line: #d8cbaa;
+
+  --maxw: 780px;
+  --radius: 6px;
+  --font: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', Meiryo, 'Noto Sans JP', system-ui, sans-serif;
+  --font-serif: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.85;
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { max-width: 100%; height: auto; }
+a { color: var(--vermillion-deep); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1, h2, h3 { line-height: 1.5; font-weight: 700; color: var(--ink-deep); font-family: var(--font-serif); }
+
+button { font-family: inherit; }
+
+:focus-visible { outline: 3px solid var(--gold-soft); outline-offset: 2px; }
