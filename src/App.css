@@ -240,6 +240,41 @@
 .statue-card__meta { font-size: 0.8rem; color: var(--gold); margin: 0 0 8px; }
 .statue-card__note { font-size: 0.88rem; color: var(--ink); margin: 0; }
 
+/* ── 読みもの一覧・記事 ── */
+.article-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.article-list__link {
+  width: 100%;
+  text-align: left;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--gold-soft);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.article-list__link:hover { border-left-color: var(--vermillion); }
+.article-list__title { font-weight: 700; color: var(--ink-deep); font-size: 1rem; }
+.article-list__desc { font-size: 0.86rem; color: var(--ink-soft); }
+
+.article-breadcrumb { margin-bottom: 16px; }
+.article-breadcrumb button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--vermillion-deep);
+  font-size: 0.86rem;
+  padding: 0;
+}
+
 /* ── About / Privacy ── */
 .page-article h1 {
   font-size: 1.6rem;

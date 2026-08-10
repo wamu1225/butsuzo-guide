@@ -4,13 +4,29 @@ import IdentifyFlow from './components/IdentifyFlow';
 import { tiers } from './data/tiers';
 import { buddhasByTier } from './data/buddhas';
 import { famousStatues } from './data/statues';
+import { articles, articleBySlug, type Article } from './data/articles';
+import { ABOUT_CONTENT, PRIVACY_CONTENT } from './data/static-pages';
 import './App.css';
+
+// ## 見出しと段落だけを扱う軽量マークダウン→JSX変換（articles.ts の本文と共有）
+function parseArticleBody(md: string): ReactNode[] {
+  return md
+    .split(/\n{2,}/)
+    .map((block) => block.trim())
+    .filter(Boolean)
+    .map((block, i) => {
+      if (block.startsWith('## ')) {
+        return <h2 key={i}>{block.slice(3).trim()}</h2>;
+      }
+      return <p key={i}>{block}</p>;
+    });
+}
 
 const SITE_NAME = '仏像の見分け方ガイド';
 const BASE = '/butsuzo-guide';
 
 function getCurrentPath(): string {
-  const p = window.location.pathname.replace(BASE, '');
+  const p = window.location.pathname.replace(BASE, '').replace(/\/$/, '');
   return p || '/';
 }
 
@@ -32,6 +48,7 @@ function Header({ path, navigate }: { path: string; navigate: (p: string) => voi
         </button>
         <nav className="site-nav">
           {link('/', '見分けフロー')}
+          {link('/articles', '読みもの')}
           {link('/zukan', '図鑑')}
           {link('/about', 'サイトについて')}
         </nav>
@@ -130,20 +147,46 @@ function ZukanView() {
   );
 }
 
+function ArticlesIndexView({ navigate }: { navigate: (p: string) => void }) {
+  return (
+    <>
+      <section className="hero hero--compact">
+        <h1 className="hero__title">読みもの</h1>
+        <p className="hero__lead">仏像の見分け方を、順を追って解説します。</p>
+      </section>
+      <section className="section">
+        <ul className="article-list">
+          {articles.map((a) => (
+            <li key={a.slug}>
+              <button className="article-list__link" onClick={() => navigate(`/articles/${a.slug}`)} type="button">
+                <span className="article-list__title">{a.title}</span>
+                <span className="article-list__desc">{a.description}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </>
+  );
+}
+
+function ArticleView({ article, navigate }: { article: Article; navigate: (p: string) => void }) {
+  return (
+    <article className="page-article">
+      <nav className="article-breadcrumb">
+        <button onClick={() => navigate('/articles')} type="button">← 読みもの一覧</button>
+      </nav>
+      <h1>{article.title}</h1>
+      {parseArticleBody(article.content)}
+    </article>
+  );
+}
+
 function AboutView() {
   return (
     <article className="page-article">
       <h1>サイトについて</h1>
-      <p>
-        「{SITE_NAME}」は、仏像を髪型・装身具・表情・持物・印相などの手がかりから見分けられるようになるための、個人運営の学習支援サイトです。東京国立博物館・京都国立博物館・奈良国立博物館・文化庁などの公開情報を参照し、事実を確認したうえで、運営者が自分の言葉で解説しています。
-      </p>
-      <p className="page-article__disclaimer">
-        本サイトは美術・文化史として仏像を紹介するものであり、特定の宗派の教義を説くものではありません。宗派・解釈により見方が分かれる事項は「〜とされる」と示し、断定を避けています。
-      </p>
-      <h2>編集と制作の方針</h2>
-      <p>
-        出典の文章をそのまま転載することはありません。図像の細部について博物館・寺院の公式情報で裏付けが取れなかった事項は、確認できるまで記載を保留しています。
-      </p>
+      {parseArticleBody(ABOUT_CONTENT)}
     </article>
   );
 }
@@ -152,12 +195,7 @@ function PrivacyView() {
   return (
     <article className="page-article">
       <h1>プライバシーポリシー</h1>
-      <h2>アクセス解析</h2>
-      <p>本サイトでは、サイトの利用状況を把握するために Google Analytics を使用しています。Google Analytics はクッキーを利用して匿名のトラフィックデータを収集します。収集される情報は匿名で、個人を特定するものではありません。</p>
-      <h2>広告について</h2>
-      <p>本サイトでは Google AdSense などの第三者配信の広告サービスを利用することがあります。広告配信事業者は、ユーザーの興味に応じた広告を表示するためにクッキーを使用することがあります。Cookie を無効にする設定や、Google の広告設定により、パーソナライズ広告を無効にできます。</p>
-      <h2>免責事項</h2>
-      <p>本サイトの情報は可能な限り正確を期していますが、その完全性や正確性を保証するものではありません。本サイトの情報を利用したことにより生じた損害について、運営者は一切の責任を負いません。</p>
+      {parseArticleBody(PRIVACY_CONTENT)}
     </article>
   );
 }
@@ -180,6 +218,11 @@ export default function App() {
   let content: ReactNode;
   if (path === '/' || path === '') content = <TopView />;
   else if (path === '/zukan') content = <ZukanView />;
+  else if (path === '/articles') content = <ArticlesIndexView navigate={navigate} />;
+  else if (path.startsWith('/articles/')) {
+    const article = articleBySlug(path.slice('/articles/'.length));
+    content = article ? <ArticleView article={article} navigate={navigate} /> : <TopView />;
+  }
   else if (path === '/about') content = <AboutView />;
   else if (path === '/privacy') content = <PrivacyView />;
   else content = <TopView />;
