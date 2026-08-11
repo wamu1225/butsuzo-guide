@@ -7,6 +7,7 @@ import { buddhasByTier } from '../src/data/buddhas.ts';
 import { famousStatues } from '../src/data/statues.ts';
 import { articles } from '../src/data/articles.ts';
 import { ABOUT_CONTENT, PRIVACY_CONTENT } from '../src/data/static-pages.ts';
+import { mudraDiagramSvg } from '../src/data/mudraDiagramData.ts';
 
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
 const INDEX_HTML_PATH = path.join(DIST_DIR, 'index.html');
@@ -34,7 +35,8 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-// ## 見出し＋段落だけの軽量マークダウン→HTML（articles.ts / App.tsx の parseArticleBody と対になる規則）
+// ## 見出し・段落・{{mudra:ID}}図解マーカーを扱う軽量マークダウン→HTML
+// （articles.ts / App.tsx の parseArticleBody と対になる規則）
 function markdownToHtml(md: string): string {
   return md
     .split(/\n{2,}/)
@@ -42,6 +44,8 @@ function markdownToHtml(md: string): string {
     .filter(Boolean)
     .map((b) => {
       if (b.startsWith('## ')) return `<h2 class="content-h2">${escapeHtml(b.slice(3).trim())}</h2>`;
+      const mudraMatch = b.match(/^\{\{mudra:([a-z-]+)\}\}$/);
+      if (mudraMatch) return `<div style="width:108px;margin:4px 0 12px">${mudraDiagramSvg(mudraMatch[1])}</div>`;
       return `<p class="content-p">${escapeHtml(b)}</p>`;
     })
     .join('\n');

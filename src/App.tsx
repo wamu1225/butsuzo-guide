@@ -6,9 +6,10 @@ import { buddhasByTier } from './data/buddhas';
 import { famousStatues } from './data/statues';
 import { articles, articleBySlug, type Article } from './data/articles';
 import { ABOUT_CONTENT, PRIVACY_CONTENT } from './data/static-pages';
+import MudraDiagram from './components/MudraDiagram';
 import './App.css';
 
-// ## 見出しと段落だけを扱う軽量マークダウン→JSX変換（articles.ts の本文と共有）
+// ## 見出し・段落・{{mudra:ID}}図解マーカーを扱う軽量マークダウン→JSX変換（articles.ts の本文と共有）
 function parseArticleBody(md: string): ReactNode[] {
   return md
     .split(/\n{2,}/)
@@ -17,6 +18,10 @@ function parseArticleBody(md: string): ReactNode[] {
     .map((block, i) => {
       if (block.startsWith('## ')) {
         return <h2 key={i}>{block.slice(3).trim()}</h2>;
+      }
+      const mudraMatch = block.match(/^\{\{mudra:([a-z-]+)\}\}$/);
+      if (mudraMatch) {
+        return <MudraDiagram key={i} mudraId={mudraMatch[1]} style={{ width: 108, margin: '4px 0 12px' }} />;
       }
       return <p key={i}>{block}</p>;
     });
