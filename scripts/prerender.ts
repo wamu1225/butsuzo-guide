@@ -45,7 +45,7 @@ function markdownToHtml(md: string): string {
     .map((b) => {
       if (b.startsWith('## ')) return `<h2 class="content-h2">${escapeHtml(b.slice(3).trim())}</h2>`;
       const mudraMatch = b.match(/^\{\{mudra:([a-z-]+)\}\}$/);
-      if (mudraMatch) return `<div style="width:108px;margin:4px 0 12px">${mudraDiagramSvg(mudraMatch[1])}</div>`;
+      if (mudraMatch) return `<div style="width:200px;margin:4px 0 16px">${mudraDiagramSvg(mudraMatch[1])}</div>`;
       return `<p class="content-p">${escapeHtml(b)}</p>`;
     })
     .join('\n');

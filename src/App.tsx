@@ -21,7 +21,7 @@ function parseArticleBody(md: string): ReactNode[] {
       }
       const mudraMatch = block.match(/^\{\{mudra:([a-z-]+)\}\}$/);
       if (mudraMatch) {
-        return <MudraDiagram key={i} mudraId={mudraMatch[1]} style={{ width: 108, margin: '4px 0 12px' }} />;
+        return <MudraDiagram key={i} mudraId={mudraMatch[1]} style={{ width: 200, margin: '4px 0 16px' }} />;
       }
       return <p key={i}>{block}</p>;
     });

@@ -275,6 +275,23 @@
   padding: 0;
 }
 
+/* ── 印相の模式図 ── */
+.mudra-figure {
+  margin: 4px 0 16px;
+  padding: 10px 12px 8px;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: inline-block;
+}
+.mudra-diagram { display: block; width: 100%; height: auto; }
+.mudra-figure__caption {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
 /* ── About / Privacy ── */
 .page-article h1 {
   font-size: 1.6rem;
