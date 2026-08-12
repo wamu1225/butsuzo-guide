@@ -23,7 +23,7 @@ export const famousStatues: FamousStatue[] = [
     era: '奈良時代',
     material: '銅造',
     tier: 'nyorai',
-    note: '全宇宙を照らす仏として、国家事業として造立された。像高は約15メートル。',
+    note: '全宇宙を照らす仏として、国家事業として造立されました。像高は約15メートル。',
   },
   {
     id: 'ashura-kofukuji',
@@ -33,7 +33,7 @@ export const famousStatues: FamousStatue[] = [
     era: '奈良時代（734年）',
     material: '脱活乾漆造',
     tier: 'tenbu',
-    note: '三つの顔と六本の腕（三面六臂）を持つ。仏法を守る八部衆の一体で、少年のような憂いを帯びた表情で知られる。',
+    note: '三つの顔と六本の腕（三面六臂）を持ちます。仏法を守る八部衆の一体で、少年のような憂いを帯びた表情で知られます。',
   },
   {
     id: 'amida-byodoin',
@@ -43,7 +43,7 @@ export const famousStatues: FamousStatue[] = [
     era: '平安時代（1053年）',
     material: '寄木造・漆箔',
     tier: 'nyorai',
-    note: '仏師・定朝（じょうちょう）の作と確実に分かる現存唯一の作品。優美な作風は後世の仏像の規範となった。',
+    note: '仏師・定朝（じょうちょう）の作と確実に分かる現存唯一の作品。優美な作風は後世の仏像の規範となりました。',
   },
   {
     id: 'senju-sanjusangendo',
@@ -53,7 +53,7 @@ export const famousStatues: FamousStatue[] = [
     era: '鎌倉時代',
     material: '寄木造',
     tier: 'bosatsu',
-    note: '仏師・湛慶（たんけい）ら慶派による中尊。堂内には等身大の千手観音立像1001体も並ぶ。',
+    note: '仏師・湛慶（たんけい）ら慶派による中尊。堂内には等身大の千手観音立像1001体も並びます。',
   },
   {
     id: 'dainichi-kongoji',
@@ -63,7 +63,7 @@ export const famousStatues: FamousStatue[] = [
     era: '平安時代後期',
     material: '木造',
     tier: 'nyorai',
-    note: '智拳印を結ぶ、平安後期を代表する大日如来像のひとつ。',
+    note: '智拳印を結ぶ、平安後期を代表する大日如来像のひとつです。',
   },
   {
     id: 'godai-kokuzo-toji',
@@ -93,7 +93,7 @@ export const famousStatues: FamousStatue[] = [
     era: '飛鳥時代',
     material: '木造',
     tier: 'bosatsu',
-    note: '寺伝では如意輪観音とされるが、片足を組んで頬に指を添える半跏思惟の姿から弥勒菩薩とする説もあり、諸説がある。',
+    note: '寺伝では如意輪観音とされるが、片足を組んで頬に指を添える半跏思惟の姿から弥勒菩薩とする説もあり、諸説があります。',
   },
 ];
 

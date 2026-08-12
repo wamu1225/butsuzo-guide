@@ -36,7 +36,7 @@ export const heldObjects: HeldObject[] = [
   {
     id: 'shakujou',
     name: '錫杖',
-    meaning: '杖の頭の輪が音を立てて修行者の来訪を知らせる。地獄の衆生を救う象徴',
+    meaning: '杖の頭の輪が音を立てて修行者の来訪を知らせます。地獄の衆生を救う象徴',
     buddhas: '地蔵菩薩',
   },
   {
