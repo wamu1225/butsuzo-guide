@@ -7,6 +7,7 @@ import { buddhasByTier } from '../src/data/buddhas.ts';
 import { famousStatues } from '../src/data/statues.ts';
 import { articles } from '../src/data/articles.ts';
 import { ABOUT_CONTENT, PRIVACY_CONTENT } from '../src/data/static-pages.ts';
+import { HEAD_FIGURES } from '../src/data/head-figures.ts';
 
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
 const INDEX_HTML_PATH = path.join(DIST_DIR, 'index.html');
@@ -43,6 +44,7 @@ function markdownToHtml(md: string): string {
     .filter(Boolean)
     .map((b) => {
       if (b.startsWith('## ')) return `<h2 class="content-h2">${escapeHtml(b.slice(3).trim())}</h2>`;
+      if (b === '[[figure:heads]]') return headFigRowHtml;
       if (b.startsWith('|') && b.includes('\n')) {
         const rows = b.split('\n').map((r) => r.trim()).filter((r) => r.startsWith('|'))
           .map((r) => r.split('|').slice(1, -1).map((c) => c.trim()));
@@ -102,9 +104,20 @@ const articleLinksHtml = articles
   .map((a) => `<li><a href="${BASE}/articles/${a.slug}/">${escapeHtml(a.title)}</a>：${escapeHtml(a.description)}</li>`)
   .join('\n');
 
+// 髪型の4分類は輪郭の違いそのものなので、静的HTML側にも同じ図を出す
+const tierNames: Record<string, string> = {
+  nyorai: '如来', bosatsu: '菩薩', myoo: '明王', tenbu: '天部',
+};
+const headFigRowHtml = `<ul class="head-fig-row">${HEAD_FIGURES.map(
+  (f) => `<li>${f.svg}<strong>${escapeHtml(tierNames[f.id])}</strong>${escapeHtml(f.label)}</li>`
+).join('\n')}</ul>`;
+
 const rootFallback = `<article id="static-fallback" style="font-family:sans-serif;line-height:1.8;max-width:780px;margin:0 auto;padding:24px 16px">
   <h1>仏像を、手がかりから見分ける</h1>
   <p>髪型・装身具・表情・持物・印相を手がかりに、目の前の仏像が如来・菩薩・明王・天部のどれで、何という仏かを判定します。判定ツールはJavaScriptが有効な環境でご利用いただけます。</p>
+  <h2>髪型で4つに分かれる</h2>
+  <p>まず頭を見ます。髪の形だけで、四つの階層のどれかまで絞れます。</p>
+  ${headFigRowHtml}
   <h2>4つの階層</h2>
   <div class="tier-grid">${tierGridHtml}</div>
   <h2>読みもの</h2>

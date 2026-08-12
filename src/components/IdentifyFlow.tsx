@@ -5,6 +5,7 @@ import { tiers, type Tier, type TierId } from '../data/tiers';
 import { buddhasByTier, type RepresentativeBuddha } from '../data/buddhas';
 import { mudraById } from '../data/mudras';
 import { heldObjectById } from '../data/attributes';
+import { headFigureById } from '../data/head-figures';
 
 const HAIRSTYLE_OPTIONS: { tier: TierId; label: string; hint: string }[] = [
   { tier: 'nyorai', label: '螺髪（巻き貝状の粒がびっしり並ぶ）', hint: '頭頂が盛り上がる（肉髻）' },
@@ -50,16 +51,23 @@ export default function IdentifyFlow() {
       {step === 1 && (
         <div className="identify-flow__panel">
           <h3 className="identify-flow__question">その仏像の髪型・頭部は、どれに近いですか？</h3>
-          <div className="identify-flow__choices">
+          <div className="identify-flow__choices identify-flow__choices--head">
             {HAIRSTYLE_OPTIONS.map((opt) => (
               <button
                 key={opt.tier}
-                className="identify-flow__choice"
+                className="identify-flow__choice identify-flow__choice--head"
                 onClick={() => chooseTier(opt.tier)}
                 type="button"
               >
-                <span className="identify-flow__choice-label">{opt.label}</span>
-                <span className="identify-flow__choice-hint">{opt.hint}</span>
+                <span
+                  className="identify-flow__choice-fig"
+                  aria-hidden="true"
+                  dangerouslySetInnerHTML={{ __html: headFigureById(opt.tier).svg }}
+                />
+                <span className="identify-flow__choice-text">
+                  <span className="identify-flow__choice-label">{opt.label}</span>
+                  <span className="identify-flow__choice-hint">{opt.hint}</span>
+                </span>
               </button>
             ))}
           </div>

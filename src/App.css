@@ -33,7 +33,11 @@
 .site-nav {
   display: flex;
   gap: 4px;
+  /* 幅が足りないときは横に流す。項目を語の途中で折り返させない */
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.site-nav::-webkit-scrollbar { display: none; }
 .site-nav__link {
   background: none;
   border: none;
@@ -42,6 +46,13 @@
   font-size: 0.9rem;
   padding: 6px 12px;
   border-radius: var(--radius);
+  white-space: nowrap;
+}
+/* 実機幅（390px）で4項目が1行に収まる寸法にする */
+@media (max-width: 460px) {
+  .site-header__inner { padding: 12px 12px 10px; gap: 8px; }
+  .site-nav { gap: 0; width: 100%; justify-content: space-between; }
+  .site-nav__link { font-size: 0.82rem; padding: 6px 6px; }
 }
 .site-nav__link:hover { color: #fbf7ee; }
 .site-nav__link.is-current {
@@ -124,6 +135,57 @@
 }
 .identify-flow__choice-label { font-weight: 700; color: var(--ink-deep); font-size: 0.98rem; }
 .identify-flow__choice-hint { font-size: 0.84rem; color: var(--ink-soft); }
+
+/* ── 髪型の4択：輪郭の図で選べるようにする ── */
+.identify-flow__choices--head { gap: 10px; }
+.identify-flow__choice--head {
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+}
+.identify-flow__choice-fig {
+  flex: 0 0 auto;
+  display: block;
+  width: 58px;
+}
+.identify-flow__choice-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.head-fig {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.head-fig__skin { fill: var(--paper-deep); stroke: var(--ink); stroke-width: 1.4; }
+.head-fig__robe { fill: var(--line); stroke: var(--ink); stroke-width: 1.4; }
+.head-fig__hair { fill: var(--ink); }
+.head-fig__curl { fill: var(--ink); stroke: var(--paper-deep); stroke-width: 0.7; }
+.head-fig__ridge { fill: none; stroke: var(--paper-deep); stroke-width: 1.2; }
+.head-fig__gold { fill: var(--gold); }
+.head-fig__metal { fill: var(--ink-soft); stroke: var(--ink); stroke-width: 1.2; }
+.head-fig__stroke { stroke: var(--ink); stroke-width: 2.4; fill: none; stroke-linecap: round; }
+
+/* 静的HTML（JS無効時）の4階層一覧に並べる比較図 */
+.head-fig-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+}
+.head-fig-row li {
+  flex: 1 1 130px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.head-fig-row .head-fig { width: 70px; margin: 0 auto 4px; }
+.head-fig-row strong { display: block; color: var(--ink-deep); font-size: 0.95rem; }
 
 .identify-flow__tier-badge {
   display: inline-block;

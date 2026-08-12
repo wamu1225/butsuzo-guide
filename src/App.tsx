@@ -6,11 +6,30 @@ import { buddhasByTier } from './data/buddhas';
 import { famousStatues } from './data/statues';
 import { articles, articleBySlug, type Article } from './data/articles';
 import { ABOUT_CONTENT, PRIVACY_CONTENT } from './data/static-pages';
+import { HEAD_FIGURES, type HeadFigure } from './data/head-figures';
 import './App.css';
 
 // ## 見出し・表・段落を扱う軽量マークダウン→JSX変換（articles.ts の本文と共有）
 // ⚠️ scripts/prerender.ts の markdownToHtml と規則を一致させること（片方だけ直すと
 //    React と静的HTMLで見え方が食い違う＝本プロジェクトで繰り返している事故）。
+const TIER_LABEL: Record<HeadFigure['id'], string> = {
+  nyorai: '如来', bosatsu: '菩薩', myoo: '明王', tenbu: '天部',
+};
+
+function HeadFigureRow() {
+  return (
+    <ul className="head-fig-row">
+      {HEAD_FIGURES.map((f) => (
+        <li key={f.id}>
+          <span aria-hidden="true" dangerouslySetInnerHTML={{ __html: f.svg }} />
+          <strong>{TIER_LABEL[f.id]}</strong>
+          {f.label}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function parseArticleBody(md: string): ReactNode[] {
   return md
     .split(/\n{2,}/)
@@ -19,6 +38,10 @@ function parseArticleBody(md: string): ReactNode[] {
     .map((block, i) => {
       if (block.startsWith('## ')) {
         return <h2 key={i}>{block.slice(3).trim()}</h2>;
+      }
+      // [[figure:heads]] ＝ 4階層の頭部の輪郭を並べた比較図（prerender.ts と同じ出力にすること）
+      if (block === '[[figure:heads]]') {
+        return <HeadFigureRow key={i} />;
       }
       if (block.startsWith('|') && block.includes('\n')) {
         const rows = block.split('\n').map((r) => r.trim()).filter((r) => r.startsWith('|'))
