@@ -7,7 +7,6 @@ import { buddhasByTier } from '../src/data/buddhas.ts';
 import { famousStatues } from '../src/data/statues.ts';
 import { articles } from '../src/data/articles.ts';
 import { ABOUT_CONTENT, PRIVACY_CONTENT } from '../src/data/static-pages.ts';
-import { mudraDiagramSvg } from '../src/data/mudraDiagramData.ts';
 
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
 const INDEX_HTML_PATH = path.join(DIST_DIR, 'index.html');
@@ -35,8 +34,8 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-// ## 見出し・段落・{{mudra:ID}}図解マーカーを扱う軽量マークダウン→HTML
-// （articles.ts / App.tsx の parseArticleBody と対になる規則）
+// ## 見出し・表・段落を扱う軽量マークダウン→HTML
+// （articles.ts / App.tsx の parseArticleBody と対になる規則。両者の出力を一致させること）
 function markdownToHtml(md: string): string {
   return md
     .split(/\n{2,}/)
@@ -44,8 +43,20 @@ function markdownToHtml(md: string): string {
     .filter(Boolean)
     .map((b) => {
       if (b.startsWith('## ')) return `<h2 class="content-h2">${escapeHtml(b.slice(3).trim())}</h2>`;
-      const mudraMatch = b.match(/^\{\{mudra:([a-z-]+)\}\}$/);
-      if (mudraMatch) return `<div style="width:200px;margin:4px 0 16px">${mudraDiagramSvg(mudraMatch[1])}</div>`;
+      if (b.startsWith('|') && b.includes('\n')) {
+        const rows = b.split('\n').map((r) => r.trim()).filter((r) => r.startsWith('|'))
+          .map((r) => r.split('|').slice(1, -1).map((c) => c.trim()));
+        const body = rows.filter((r) => !r.every((c) => /^[-:]+$/.test(c)));
+        if (body.length >= 2) {
+          const head = body[0];
+          const rest = body.slice(1);
+          return `<div class="content-table-wrap"><table class="content-table"><thead><tr>${
+            head.map((c) => `<th>${escapeHtml(c)}</th>`).join('')
+          }</tr></thead><tbody>${
+            rest.map((r) => `<tr>${r.map((c) => `<td>${escapeHtml(c)}</td>`).join('')}</tr>`).join('')
+          }</tbody></table></div>`;
+        }
+      }
       return `<p class="content-p">${escapeHtml(b)}</p>`;
     })
     .join('\n');

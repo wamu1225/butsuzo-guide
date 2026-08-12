@@ -6,10 +6,11 @@ import { buddhasByTier } from './data/buddhas';
 import { famousStatues } from './data/statues';
 import { articles, articleBySlug, type Article } from './data/articles';
 import { ABOUT_CONTENT, PRIVACY_CONTENT } from './data/static-pages';
-import MudraDiagram from './components/MudraDiagram';
 import './App.css';
 
-// ## 見出し・段落・{{mudra:ID}}図解マーカーを扱う軽量マークダウン→JSX変換（articles.ts の本文と共有）
+// ## 見出し・表・段落を扱う軽量マークダウン→JSX変換（articles.ts の本文と共有）
+// ⚠️ scripts/prerender.ts の markdownToHtml と規則を一致させること（片方だけ直すと
+//    React と静的HTMLで見え方が食い違う＝本プロジェクトで繰り返している事故）。
 function parseArticleBody(md: string): ReactNode[] {
   return md
     .split(/\n{2,}/)
@@ -19,9 +20,21 @@ function parseArticleBody(md: string): ReactNode[] {
       if (block.startsWith('## ')) {
         return <h2 key={i}>{block.slice(3).trim()}</h2>;
       }
-      const mudraMatch = block.match(/^\{\{mudra:([a-z-]+)\}\}$/);
-      if (mudraMatch) {
-        return <MudraDiagram key={i} mudraId={mudraMatch[1]} style={{ width: 200, margin: '4px 0 16px' }} />;
+      if (block.startsWith('|') && block.includes('\n')) {
+        const rows = block.split('\n').map((r) => r.trim()).filter((r) => r.startsWith('|'))
+          .map((r) => r.split('|').slice(1, -1).map((c) => c.trim()));
+        const body = rows.filter((r) => !r.every((c) => /^[-:]+$/.test(c)));
+        if (body.length >= 2) {
+          const [head, ...rest] = body;
+          return (
+            <div key={i} className="content-table-wrap">
+              <table className="content-table">
+                <thead><tr>{head.map((c, ci) => <th key={ci}>{c}</th>)}</tr></thead>
+                <tbody>{rest.map((r, ri) => <tr key={ri}>{r.map((c, ci) => <td key={ci}>{c}</td>)}</tr>)}</tbody>
+              </table>
+            </div>
+          );
+        }
       }
       return <p key={i}>{block}</p>;
     });
