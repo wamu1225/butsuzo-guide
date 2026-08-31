@@ -230,18 +230,19 @@ writeHtml(path.join(DIST_DIR, 'privacy'), privacyHtml);
 console.log('✓ /about/ /privacy/');
 
 // ── sitemap.xml ──
+// lastmod はページ単位の実更新日（O-2-27）。articles は既存の a.updatedAt をそのまま使う。
 const today = new Date().toISOString().split('T')[0];
 const urls = [
-  { loc: `${BASE_URL}/`, priority: '1.0' },
-  { loc: `${BASE_URL}/zukan/`, priority: '0.8' },
-  { loc: `${BASE_URL}/articles/`, priority: '0.7' },
-  ...articles.map((a) => ({ loc: `${BASE_URL}/articles/${a.slug}/`, priority: '0.8' })),
-  { loc: `${BASE_URL}/about/`, priority: '0.3' },
-  { loc: `${BASE_URL}/privacy/`, priority: '0.2' },
+  { loc: `${BASE_URL}/`, lastmod: today, priority: '1.0' },
+  { loc: `${BASE_URL}/zukan/`, lastmod: today, priority: '0.8' },
+  { loc: `${BASE_URL}/articles/`, lastmod: today, priority: '0.7' },
+  ...articles.map((a) => ({ loc: `${BASE_URL}/articles/${a.slug}/`, lastmod: a.updatedAt, priority: '0.8' })),
+  { loc: `${BASE_URL}/about/`, lastmod: today, priority: '0.3' },
+  { loc: `${BASE_URL}/privacy/`, lastmod: today, priority: '0.2' },
 ];
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((u) => `  <url><loc>${u.loc}</loc><lastmod>${today}</lastmod><priority>${u.priority}</priority></url>`).join('\n')}
+${urls.map((u) => `  <url><loc>${u.loc}</loc><lastmod>${u.lastmod}</lastmod><priority>${u.priority}</priority></url>`).join('\n')}
 </urlset>`;
 fs.writeFileSync(path.join(DIST_DIR, 'sitemap.xml'), sitemapXml);
 console.log(`✓ sitemap.xml（${urls.length}件）`);
