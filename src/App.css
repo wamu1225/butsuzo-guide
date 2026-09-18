@@ -107,6 +107,12 @@
 
 .identify-flow__question {
   font-size: 1.08rem;
+  margin: 0 0 4px;
+}
+
+.identify-flow__question-hint {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
   margin: 0 0 16px;
 }
 
@@ -133,7 +139,7 @@
   border-color: var(--gold-soft);
   background: var(--paper-card);
 }
-.identify-flow__choice-label { font-weight: 700; color: var(--ink-deep); font-size: 0.98rem; }
+.identify-flow__choice-label { font-weight: 600; color: var(--ink-deep); font-size: 0.98rem; line-height: 1.5; }
 .identify-flow__choice-hint { font-size: 0.84rem; color: var(--ink-soft); }
 
 /* ── 髪型の4択：輪郭の図で選べるようにする ── */
@@ -186,6 +192,33 @@
 }
 .head-fig-row .head-fig { width: 70px; margin: 0 auto 4px; }
 .head-fig-row strong { display: block; color: var(--ink-deep); font-size: 0.95rem; }
+
+.mudra-fig {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.mudra-fig__hand { fill: var(--paper-deep); stroke: var(--ink); stroke-width: 1.4; }
+.mudra-fig__stroke { stroke: var(--ink); stroke-width: 2.4; fill: none; stroke-linecap: round; }
+.mudra-fig__ring { fill: none; stroke: var(--gold); stroke-width: 3; }
+
+/* 法界定印／阿弥陀定印の「輪の有無」比較図（見分けフロー・読みものの両方で使う） */
+.mudra-fig-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+}
+.mudra-fig-row li {
+  flex: 1 1 160px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.mudra-fig-row .mudra-fig { width: 130px; margin: 0 auto 4px; }
+.mudra-fig-row strong { display: block; color: var(--ink-deep); font-size: 0.95rem; }
 
 .identify-flow__tier-badge {
   display: inline-block;
@@ -335,23 +368,6 @@
   color: var(--vermillion-deep);
   font-size: 0.86rem;
   padding: 0;
-}
-
-/* ── 印相の模式図 ── */
-.mudra-figure {
-  margin: 4px 0 16px;
-  padding: 10px 12px 8px;
-  background: var(--paper-card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  display: inline-block;
-}
-.mudra-diagram { display: block; width: 100%; height: auto; }
-.mudra-figure__caption {
-  margin-top: 6px;
-  font-size: 0.8rem;
-  color: var(--ink-soft);
-  text-align: center;
 }
 
 /* ── About / Privacy ── */

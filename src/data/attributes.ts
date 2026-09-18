@@ -45,6 +45,36 @@ export const heldObjects: HeldObject[] = [
     meaning: '病を癒す薬を納める',
     buddhas: '薬師如来',
   },
+  {
+    id: 'ken',
+    name: '剣',
+    meaning: '東方を守り、邪を断ち切る',
+    buddhas: '持国天',
+  },
+  {
+    id: 'geki',
+    name: '戟（げき）',
+    meaning: '南方を守る武器。矛の一種',
+    buddhas: '増長天',
+  },
+  {
+    id: 'fude-kyokan',
+    name: '筆と経巻',
+    meaning: '西方を守り、人々の善悪の行いを書き記す',
+    buddhas: '広目天',
+  },
+  {
+    id: 'houtou',
+    name: '宝塔',
+    meaning: '北方を守り、仏の教えと財宝を納める塔を捧げ持つ',
+    buddhas: '多聞天（単独では毘沙門天とも）',
+  },
+  {
+    id: 'kyuya',
+    name: '弓矢',
+    meaning: '祈願の成就を象徴する',
+    buddhas: '愛染明王',
+  },
 ];
 
 export const heldObjectById = (id: string): HeldObject | undefined =>

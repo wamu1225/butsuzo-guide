@@ -12,12 +12,20 @@ export interface Mudra {
 
 export const mudras: Mudra[] = [
   {
-    id: 'jouin',
-    name: '定印',
-    reading: 'じょういん',
-    shape: '腹の前で両手を重ね、親指と人差し指で輪をつくる',
+    id: 'hokkai-jouin',
+    name: '法界定印',
+    reading: 'ほっかいじょういん',
+    shape: '腹の前で両手を上下に重ね、親指の先どうしを合わせる（輪はつくらない）',
     meaning: '瞑想・精神統一を表す',
-    buddhas: '釈迦如来・阿弥陀如来',
+    buddhas: '釈迦如来・大日如来（胎蔵界）',
+  },
+  {
+    id: 'amida-jouin',
+    name: '阿弥陀定印（弥陀定印）',
+    reading: 'あみだじょういん（みだじょういん）',
+    shape: '腹の前で両手を重ね、親指と人差し指（像により中指・薬指のことも）で輪をつくる',
+    meaning: '瞑想・精神統一を表す。極楽往生の9段階（九品）を表す一群として、輪をつくる指の組み合わせを変えた作例もある',
+    buddhas: '阿弥陀如来',
   },
   {
     id: 'semui-in',

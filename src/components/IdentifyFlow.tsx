@@ -80,7 +80,8 @@ export default function IdentifyFlow() {
             髪型から、<strong>{tier.name}（{tier.reading}）</strong>の可能性が高いです
           </div>
           <p className="identify-flow__tier-desc">{tier.position}。{tier.role}。</p>
-          <h3 className="identify-flow__question">持物（手に持つ道具）や印相（手の形）、際立った特徴はありますか？</h3>
+          <h3 className="identify-flow__question">持物（手に持つ道具）や印相（手の形）は、次のどれに近いですか？</h3>
+          <p className="identify-flow__question-hint">名前が分からなくてかまいません。目に見える手がかりを選んでください。</p>
           <div className="identify-flow__choices identify-flow__choices--buddha">
             {candidates.map((b) => (
               <button
@@ -89,8 +90,7 @@ export default function IdentifyFlow() {
                 onClick={() => chooseBuddha(b)}
                 type="button"
               >
-                <span className="identify-flow__choice-label">{b.name}</span>
-                <span className="identify-flow__choice-hint">{b.keyFeature}</span>
+                <span className="identify-flow__choice-label">{b.keyFeature}</span>
               </button>
             ))}
           </div>

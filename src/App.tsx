@@ -7,6 +7,7 @@ import { famousStatues } from './data/statues';
 import { articles, articleBySlug, type Article } from './data/articles';
 import { ABOUT_CONTENT, PRIVACY_CONTENT } from './data/static-pages';
 import { HEAD_FIGURES, type HeadFigure } from './data/head-figures';
+import { MUDRA_FIGURES } from './data/mudra-figures';
 import './App.css';
 
 // ## 見出し・表・段落を扱う軽量マークダウン→JSX変換（articles.ts の本文と共有）
@@ -30,6 +31,20 @@ function HeadFigureRow() {
   );
 }
 
+function MudraFigureRow() {
+  return (
+    <ul className="mudra-fig-row">
+      {MUDRA_FIGURES.map((f) => (
+        <li key={f.id}>
+          <span aria-hidden="true" dangerouslySetInnerHTML={{ __html: f.svg }} />
+          <strong>{f.id === 'hokkai-jouin' ? '法界定印（釈迦如来・大日如来）' : '阿弥陀定印（阿弥陀如来）'}</strong>
+          {f.label}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function parseArticleBody(md: string): ReactNode[] {
   return md
     .split(/\n{2,}/)
@@ -42,6 +57,9 @@ function parseArticleBody(md: string): ReactNode[] {
       // [[figure:heads]] ＝ 4階層の頭部の輪郭を並べた比較図（prerender.ts と同じ出力にすること）
       if (block === '[[figure:heads]]') {
         return <HeadFigureRow key={i} />;
+      }
+      if (block === '[[figure:jouin]]') {
+        return <MudraFigureRow key={i} />;
       }
       if (block.startsWith('|') && block.includes('\n')) {
         const rows = block.split('\n').map((r) => r.trim()).filter((r) => r.startsWith('|'))

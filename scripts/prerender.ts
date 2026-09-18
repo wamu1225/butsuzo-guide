@@ -8,6 +8,7 @@ import { famousStatues } from '../src/data/statues.ts';
 import { articles } from '../src/data/articles.ts';
 import { ABOUT_CONTENT, PRIVACY_CONTENT } from '../src/data/static-pages.ts';
 import { HEAD_FIGURES } from '../src/data/head-figures.ts';
+import { MUDRA_FIGURES } from '../src/data/mudra-figures.ts';
 
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
 const INDEX_HTML_PATH = path.join(DIST_DIR, 'index.html');
@@ -45,6 +46,7 @@ function markdownToHtml(md: string): string {
     .map((b) => {
       if (b.startsWith('## ')) return `<h2 class="content-h2">${escapeHtml(b.slice(3).trim())}</h2>`;
       if (b === '[[figure:heads]]') return headFigRowHtml;
+      if (b === '[[figure:jouin]]') return jouinFigRowHtml;
       if (b.startsWith('|') && b.includes('\n')) {
         const rows = b.split('\n').map((r) => r.trim()).filter((r) => r.startsWith('|'))
           .map((r) => r.split('|').slice(1, -1).map((c) => c.trim()));
@@ -110,6 +112,15 @@ const tierNames: Record<string, string> = {
 };
 const headFigRowHtml = `<ul class="head-fig-row">${HEAD_FIGURES.map(
   (f) => `<li>${f.svg}<strong>${escapeHtml(tierNames[f.id])}</strong>${escapeHtml(f.label)}</li>`
+).join('\n')}</ul>`;
+
+// 法界定印／阿弥陀定印の「輪の有無」比較図
+const jouinNames: Record<string, string> = {
+  'hokkai-jouin': '法界定印（釈迦如来・大日如来）',
+  'amida-jouin': '阿弥陀定印（阿弥陀如来）',
+};
+const jouinFigRowHtml = `<ul class="mudra-fig-row">${MUDRA_FIGURES.map(
+  (f) => `<li>${f.svg}<strong>${escapeHtml(jouinNames[f.id])}</strong>${escapeHtml(f.label)}</li>`
 ).join('\n')}</ul>`;
 
 const rootFallback = `<article id="static-fallback" style="font-family:sans-serif;line-height:1.8;max-width:780px;margin:0 auto;padding:24px 16px">
