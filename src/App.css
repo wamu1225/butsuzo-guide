@@ -361,7 +361,7 @@
 .article-list__desc { font-size: 0.86rem; color: var(--ink-soft); }
 
 .article-breadcrumb { margin-bottom: 16px; }
-.article-breadcrumb button {
+.article-breadcrumb button, .article-breadcrumb a {
   background: none;
   border: none;
   cursor: pointer;
@@ -401,7 +401,7 @@
 }
 .site-footer__disclaimer { max-width: var(--maxw); margin: 0 auto 12px; font-size: 0.82rem; }
 .site-footer__nav { display: flex; justify-content: center; gap: 16px; }
-.site-footer__nav button {
+.site-footer__nav button, .site-footer__nav a {
   background: none;
   border: none;
   color: #d8cbaa;
@@ -409,7 +409,7 @@
   font-size: 0.82rem;
   padding: 0;
 }
-.site-footer__nav button:hover { color: #fbf7ee; }
+.site-footer__nav button:hover, .site-footer__nav a:hover { color: #fbf7ee; }
 
 @media (max-width: 560px) {
   .identify-flow__choices { grid-template-columns: 1fr; }
@@ -424,3 +424,8 @@
 .content-table td { border: 1px solid #ddd4c2; padding: 8px 10px; text-align: left; vertical-align: top; }
 .content-table th { background: #f3ece0; font-weight: 700; white-space: nowrap; }
 .content-table tr:nth-child(even) td { background: #fdfbf6; }
+
+/* 画面遷移は <a href>（2026-11-07）。ボタンだったときと同じ見た目にする */
+a.site-header__title, a.site-nav__link, a.article-list__link, .site-footer__nav a { text-decoration: none; line-height: normal; }
+a.site-header__title:hover, a.site-nav__link:hover, a.article-list__link:hover, .site-footer__nav a:hover, .article-breadcrumb a:hover { text-decoration: none; }
+a.article-list__link { box-sizing: border-box; }

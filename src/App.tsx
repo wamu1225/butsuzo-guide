@@ -1,5 +1,5 @@
 // src/App.tsx — ルーティング + トップ（見分けフロー）＋ 図鑑
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode, type MouseEvent } from 'react';
 import IdentifyFlow from './components/IdentifyFlow';
 import { tiers } from './data/tiers';
 import { buddhasByTier } from './data/buddhas';
@@ -84,6 +84,18 @@ function parseArticleBody(md: string): ReactNode[] {
 const SITE_NAME = '仏像の見分け方ガイド';
 const BASE = '/butsuzo-guide';
 
+// 画面遷移は <a href> で出す（描画後の HTML にもリンクを残す）。ふつうの左クリックだけ SPA で動かし、Ctrl/⌘・中クリックは ブラウザに任せる
+function hrefOf(to: string): string {
+  return BASE + (to === '/' ? '/' : `${to}/`);
+}
+function spa(navigate: (p: string) => void, to: string) {
+  return (e: MouseEvent) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    navigate(to);
+  };
+}
+
 function getCurrentPath(): string {
   const p = window.location.pathname.replace(BASE, '').replace(/\/$/, '');
   return p || '/';
@@ -91,20 +103,20 @@ function getCurrentPath(): string {
 
 function Header({ path, navigate }: { path: string; navigate: (p: string) => void }) {
   const link = (to: string, label: string) => (
-    <button
+    <a
       className={`site-nav__link ${path === to ? 'is-current' : ''}`}
-      onClick={() => navigate(to)}
-      type="button"
+      href={hrefOf(to)}
+      onClick={spa(navigate, to)}
     >
       {label}
-    </button>
+    </a>
   );
   return (
     <header className="site-header">
       <div className="site-header__inner">
-        <button className="site-header__title" onClick={() => navigate('/')} type="button">
+        <a className="site-header__title" href={hrefOf('/')} onClick={spa(navigate, '/')}>
           {SITE_NAME}
-        </button>
+        </a>
         <nav className="site-nav">
           {link('/', '見分けフロー')}
           {link('/articles', '読みもの')}
@@ -123,8 +135,8 @@ function Footer({ navigate }: { navigate: (p: string) => void }) {
         本サイトは仏教美術を文化・美術史として紹介する個人運営のサイトです。宗派の優劣や信仰の是非を論じるものではありません。
       </p>
       <nav className="site-footer__nav">
-        <button onClick={() => navigate('/about')} type="button">サイトについて</button>
-        <button onClick={() => navigate('/privacy')} type="button">プライバシーポリシー</button>
+        <a href={hrefOf('/about')} onClick={spa(navigate, '/about')}>サイトについて</a>
+        <a href={hrefOf('/privacy')} onClick={spa(navigate, '/privacy')}>プライバシーポリシー</a>
       </nav>
     </footer>
   );
@@ -217,10 +229,10 @@ function ArticlesIndexView({ navigate }: { navigate: (p: string) => void }) {
         <ul className="article-list">
           {articles.map((a) => (
             <li key={a.slug}>
-              <button className="article-list__link" onClick={() => navigate(`/articles/${a.slug}`)} type="button">
+              <a className="article-list__link" href={hrefOf(`/articles/${a.slug}`)} onClick={spa(navigate, `/articles/${a.slug}`)}>
                 <span className="article-list__title">{a.title}</span>
                 <span className="article-list__desc">{a.description}</span>
-              </button>
+              </a>
             </li>
           ))}
         </ul>
@@ -233,7 +245,7 @@ function ArticleView({ article, navigate }: { article: Article; navigate: (p: st
   return (
     <article className="page-article">
       <nav className="article-breadcrumb">
-        <button onClick={() => navigate('/articles')} type="button">← 読みもの一覧</button>
+        <a href={hrefOf('/articles')} onClick={spa(navigate, '/articles')}>← 読みもの一覧</a>
       </nav>
       <h1>{article.title}</h1>
       {parseArticleBody(article.content)}
