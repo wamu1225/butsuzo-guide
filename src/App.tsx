@@ -301,7 +301,7 @@ export default function App() {
   }, []);
 
   const navigate = (to: string) => {
-    window.history.pushState(null, '', BASE + (to === '/' ? '/' : to));
+    window.history.pushState(null, '', hrefOf(to));
     setPath(to);
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
