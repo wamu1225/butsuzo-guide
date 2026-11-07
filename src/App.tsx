@@ -142,7 +142,7 @@ function Footer({ navigate }: { navigate: (p: string) => void }) {
   );
 }
 
-function TopView() {
+function TopView({ navigate }: { navigate: (p: string) => void }) {
   return (
     <>
       <section className="hero">
@@ -170,6 +170,26 @@ function TopView() {
             </div>
           ))}
         </div>
+      </section>
+      {/* 見分けたあとに 深く読む入口（静的HTMLのトップにある読みもの7本と図鑑を、描画後の画面にも出す） */}
+      <section className="section">
+        <h2 className="section__heading">読みもので くわしく</h2>
+        <ul className="article-list">
+          {articles.map((a) => (
+            <li key={a.slug}>
+              <a className="article-list__link" href={hrefOf(`/articles/${a.slug}`)} onClick={spa(navigate, `/articles/${a.slug}`)}>
+                <span className="article-list__title">{a.title}</span>
+                <span className="article-list__desc">{a.description}</span>
+              </a>
+            </li>
+          ))}
+          <li>
+            <a className="article-list__link" href={hrefOf('/zukan')} onClick={spa(navigate, '/zukan')}>
+              <span className="article-list__title">仏像図鑑</span>
+              <span className="article-list__desc">階層ごとの代表的な仏と、実際に伝わる著名な仏像をまとめた一覧です。</span>
+            </a>
+          </li>
+        </ul>
       </section>
     </>
   );
@@ -287,16 +307,16 @@ export default function App() {
   };
 
   let content: ReactNode;
-  if (path === '/' || path === '') content = <TopView />;
+  if (path === '/' || path === '') content = <TopView navigate={navigate} />;
   else if (path === '/zukan') content = <ZukanView />;
   else if (path === '/articles') content = <ArticlesIndexView navigate={navigate} />;
   else if (path.startsWith('/articles/')) {
     const article = articleBySlug(path.slice('/articles/'.length));
-    content = article ? <ArticleView article={article} navigate={navigate} /> : <TopView />;
+    content = article ? <ArticleView article={article} navigate={navigate} /> : <TopView navigate={navigate} />;
   }
   else if (path === '/about') content = <AboutView />;
   else if (path === '/privacy') content = <PrivacyView />;
-  else content = <TopView />;
+  else content = <TopView navigate={navigate} />;
 
   return (
     <div className="app-shell">
