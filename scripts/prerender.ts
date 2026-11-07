@@ -224,6 +224,7 @@ console.log(`✓ /articles/<slug>/ 全${articles.length}件`);
 
 // ── about / privacy は既存の src/data/static-pages.ts をそのまま利用 ──
 const aboutFallback = `<article id="static-fallback" style="font-family:sans-serif;line-height:1.8;max-width:780px;margin:0 auto;padding:24px 16px">
+  <h1>サイトについて</h1>
   ${markdownToHtml(ABOUT_CONTENT)}
   <p><a href="${BASE}/">← トップへ戻る</a></p>
 </article>`;
@@ -232,6 +233,7 @@ aboutHtml = aboutHtml.replace('<div id="root"></div>', `<div id="root">${aboutFa
 writeHtml(path.join(DIST_DIR, 'about'), aboutHtml);
 
 const privacyFallback = `<article id="static-fallback" style="font-family:sans-serif;line-height:1.8;max-width:780px;margin:0 auto;padding:24px 16px">
+  <h1>プライバシーポリシー</h1>
   ${markdownToHtml(PRIVACY_CONTENT)}
   <p><a href="${BASE}/">← トップへ戻る</a></p>
 </article>`;
